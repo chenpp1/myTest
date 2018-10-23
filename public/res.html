@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/login.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="margin">
+            <div class="log">
+                <a href=""><img src="images/logo_mini.jpg" alt=""></a>
+            </div>
+            <div class="hy">会员注册</div>
+            <div class="right-log">
+                <div class="fh"><a href="index.html">返回官网</a></div>
+            </div>
+        </div>
+    </header>
+    <div class="log-main">
+        <div class="margin">
+            <div class="right-log">
+                <div class="box">
+                    <a href=""><span>会员登录</span></a>
+                    <h3>欢迎注册</h3>
+                    <div>
+                        <div class="m-t">
+                            <p>手机号/用户名：</p>
+                            <input type="text" class="username">
+                        </div>
+                        <div class="m-b">
+                            <p>密码：</p>
+                            <input type="password" class="password">
+                        </div>
+                        <button id="btn" style="outline:none">注册</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="foot">
+            <div class="margin">
+                <div class="links" style="text-align:center">
+                    <a href="http://www.ansgo.com/aboutus.html">关于我们</a>&nbsp;|&nbsp;<a href="http://www.ansgo.com/help">联系我们</a>&nbsp;|&nbsp;<a href="http://www.ansgo.com/help-21.html">批发合作</a>&nbsp;|&nbsp;<a href="http://www.ansgo.com/help-15.html">购物保障</a>&nbsp;|&nbsp;<a href="http://www.ansgo.com/help-17.html">使用条款</a>&nbsp;|&nbsp;<a href="http://www.ansgo.com/help-1.html">完税价格表</a>&nbsp;|&nbsp;<a href="http://www.ansgo.com/help-10.html">破罐理赔</a>&nbsp;|&nbsp;<a href="https://weibo.com/ansgomall">官方微博</a>
+                </div>
+                <div class="wzdb" style="text-align:center">Copyright © 2011-2017 All Rights Reserved. Australia ENUO Pty Ltd</div>
+            </div>
+        </div>
+        </footer>
+    <div class="mid" style="display:none">
+        加载中...
+    </div>
+    <div class="mes">
+    </div>
+</body>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.cookie.js"></script>
+<script>
+    
+    document.onkeydown = function(e){ 
+        var e = document.all ? window.event : e;
+        if(e.keyCode==13) {
+                $("#btn").click();
+            }
+    }
+    $("#btn").on("click",function(){
+        $.ajax({
+        url:"http://106.12.22.249:4000/api/user",
+        type:"POST",
+        data:{username:$(".username").val(),passwords:$(".password").val(),type:"register"},
+        success:function(res){
+                $(".mid").css({display:"block"});
+                if(res.success){
+                    $(".mid").css({display:"none"})
+                    $.cookie("username",$(".username").val())
+                    $(".mes").html(res.message+"正在跳转登录页面").css({display:"block"})
+                    setTimeout(function(){
+                       $(".mes").css({display:"none"})
+                       $(location).attr("href","http://localhost/anshigo/login.html")
+                    },2000)
+                }else{
+                    $(".mid").css({display:"none"})
+                    $(".mes").html(res.message+"请重新注册").css({display:"block"})
+                    setTimeout(function(){
+                       $(".mes").css({display:"none"})
+                    },2000)
+                }
+                }
+            });
+        })
+    
+</script>
+</html>

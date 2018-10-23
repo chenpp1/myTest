@@ -1,0 +1,11 @@
+;(function(){
+    $.ajax({
+        url:"http://localhost/anshigo/data/ul.json",
+        type:"GET",
+        success:function(res){
+            $(".ul1").find("img").attr("src",res[0].url);
+            $(".ul2").find("img").attr("src",res[1].url);
+            $(".ul3").find("img").attr("src",res[2].url);
+        }
+    })
+})()
